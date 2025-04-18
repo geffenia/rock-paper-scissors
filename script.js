@@ -1,4 +1,8 @@
 
+let computerScore = 0;
+let humanScore = 0;
+const orderedChoices = ["rock", "paper", "scissors", "rock"];
+
 function getComputerChoice() {
     const randomNumber = Math.floor(Math.random() * 3);
     if (randomNumber === 0) {
@@ -19,4 +23,16 @@ function getHumanChoice() {
     return choice;
 }
 
-console.log(getHumanChoice());
+function playRound(humanChoice, computerChoice) {
+    const humanIndex = orderedChoices.indexOf(humanChoice);
+    const computerIndex = orderedChoices.indexOf(computerChoice);
+    if (humanIndex === computerIndex) {
+        console.log("It is a draw!");
+    } else if (humanIndex < computerIndex) {
+        console.log(`Computer wins! ${computerChoice} beats ${humanChoice}!`);
+    } else {
+        console.log(`Human wins! ${humanChoice} beats ${computerChoice}`);
+    }
+}
+
+playRound(getHumanChoice(), getComputerChoice());
