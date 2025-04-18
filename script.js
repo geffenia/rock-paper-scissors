@@ -1,6 +1,5 @@
 
-let computerScore = 0;
-let humanScore = 0;
+
 const orderedChoices = ["rock", "paper", "scissors", "rock"];
 
 function getComputerChoice() {
@@ -27,12 +26,37 @@ function playRound(humanChoice, computerChoice) {
     const humanIndex = orderedChoices.indexOf(humanChoice);
     const computerIndex = orderedChoices.indexOf(computerChoice);
     if (humanIndex === computerIndex) {
-        console.log("It is a draw!");
-    } else if (humanIndex < computerIndex) {
-        console.log(`Computer wins! ${computerChoice} beats ${humanChoice}!`);
+        return "It is a draw!";
+    } else if (computerIndex - humanIndex === 1) {
+        return `Computer wins! ${computerChoice} beats ${humanChoice}!`;
     } else {
-        console.log(`Human wins! ${humanChoice} beats ${computerChoice}`);
+        return `Human wins! ${humanChoice} beats ${computerChoice}`;
     }
 }
 
-playRound(getHumanChoice(), getComputerChoice());
+function playGame() {
+    let computerScore = 0;
+    let humanScore = 0;
+    while (computerScore < 5 && humanScore < 5) {
+        console.log(`Round start. Human: ${humanScore}. Computer: ${computerScore}`);
+        const humanChoice = getHumanChoice();
+        const computerChoice = getComputerChoice();
+        const result = playRound(humanChoice, computerChoice);
+        console.log(result);
+        if (result.startsWith("I")) {
+            continue;
+        } else if (result.startsWith("C")) {
+            computerScore++;
+        } else {
+            humanScore++;
+        }
+    }
+    if (humanScore === 5) {
+        console.log("Human wins the whole game!");
+    } else {
+        console.log("Computer wins the whole game");
+    }
+
+}
+
+playGame();
