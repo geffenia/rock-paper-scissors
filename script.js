@@ -1,6 +1,8 @@
 
 
 const orderedChoices = ["rock", "paper", "scissors", "rock"];
+let humanScore = 0;
+let computerScore = 0;
 
 function getComputerChoice() {
     const randomNumber = Math.floor(Math.random() * 3);
@@ -15,10 +17,9 @@ function getComputerChoice() {
 
 function playRound(humanChoice, computerChoice) {
     const humanIndex = orderedChoices.indexOf(humanChoice);
-    const computerIndex = orderedChoices.indexOf(computerChoice);
-    if (humanIndex === computerIndex) {
+    if (computerChoice === humanChoice) {
         return "It is a draw!";
-    } else if (computerIndex - humanIndex === 1) {
+    } else if (orderedChoices[humanIndex + 1] === computerChoice) {
         return `Computer wins! ${computerChoice} beats ${humanChoice}!`;
     } else {
         return `Human wins! ${humanChoice} beats ${computerChoice}`;
@@ -27,18 +28,18 @@ function playRound(humanChoice, computerChoice) {
 
 
 const choiceButtons = document.querySelectorAll("button");
+const feedback = document.querySelector(".feedback");
 
 function handleChoiceClick() {
     for (const button of choiceButtons) {
         button.addEventListener("click", (e) => {
-            const result = playRound(e.target.textContent, getComputerChoice());
+            const result = playRound(e.target.textContent.toLowerCase(), getComputerChoice());
             updateTextFeedback(result);
         })
     }
 }
 
 function updateTextFeedback(text) {
-    const feedback = document.querySelector(".feedback");
     feedback.textContent = text;
 }
 
