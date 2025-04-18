@@ -13,15 +13,6 @@ function getComputerChoice() {
     }
 }
 
-function getHumanChoice() {
-    let choice = "";
-    do {
-        const answer = prompt("rock, paper or scissors?: ");
-        choice = answer.toLowerCase();
-    } while (choice !== "rock" && choice !== "paper" && choice !== "scissors");
-    return choice;
-}
-
 function playRound(humanChoice, computerChoice) {
     const humanIndex = orderedChoices.indexOf(humanChoice);
     const computerIndex = orderedChoices.indexOf(computerChoice);
@@ -34,27 +25,21 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
-function playGame() {
-    let computerScore = 0;
-    let humanScore = 0;
-    while (computerScore < 5 && humanScore < 5) {
-        console.log(`Round start. Human: ${humanScore}. Computer: ${computerScore}`);
-        const humanChoice = getHumanChoice();
-        const computerChoice = getComputerChoice();
-        const result = playRound(humanChoice, computerChoice);
-        console.log(result);
-        if (result.startsWith("I")) {
-            continue;
-        } else if (result.startsWith("C")) {
-            computerScore++;
-        } else {
-            humanScore++;
-        }
-    }
-    if (humanScore === 5) {
-        console.log("Human wins the whole game!");
-    } else {
-        console.log("Computer wins the whole game");
-    }
 
+const choiceButtons = document.querySelectorAll("button");
+
+function handleChoiceClick() {
+    for (const button of choiceButtons) {
+        button.addEventListener("click", (e) => {
+            const result = playRound(e.target.textContent, getComputerChoice());
+            updateTextFeedback(result);
+        })
+    }
 }
+
+function updateTextFeedback(text) {
+    const feedback = document.querySelector(".feedback");
+    feedback.textContent = text;
+}
+
+handleChoiceClick();
