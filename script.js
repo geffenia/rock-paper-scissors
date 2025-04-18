@@ -35,12 +35,47 @@ function handleChoiceClick() {
         button.addEventListener("click", (e) => {
             const result = playRound(e.target.textContent.toLowerCase(), getComputerChoice());
             updateTextFeedback(result);
+            updateGameScores(result);
+            updateDOMScores();
+            checkGameOver();
         })
     }
 }
 
 function updateTextFeedback(text) {
     feedback.textContent = text;
+}
+
+function updateGameScores(result) {
+    if (result.startsWith("H")) {
+        humanScore++;
+    } else if (result.startsWith("C")) {
+        computerScore++;
+    }
+}
+
+function updateDOMScores() {
+    const computerSpan = document.querySelector(".computer-score");
+    const humanSpan = document.querySelector(".human-score");
+    computerSpan.textContent = computerScore;
+    humanSpan.textContent = humanScore;
+}
+
+function checkGameOver() {
+    if (humanScore === 5 || computerScore === 5) {
+        disableButtons();
+        if (humanScore === 5) {
+            updateTextFeedback("Human wins!!");
+        } else {
+            updateTextFeedback("Computer wins!!");
+        }
+    }
+}
+
+function disableButtons() {
+    for (const button of choiceButtons) {
+        button.disabled = true;
+    }
 }
 
 handleChoiceClick();
